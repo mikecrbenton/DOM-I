@@ -50,24 +50,19 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 
 //======================================================
 
-//ORIGINAL CODE
-//let navBttn = document.querySelector('nav').childNodes;
-//let navBttnArray = Array.from(navBttn);
+let navBttn = document.querySelector('nav').children;  // NOT childNode !!
+let navBttnArray = Array.from(navBttn);
 
-let navBttnCollection = document.getElementsByTagName('a');
+let i = 0;
+for ( key in siteContent.nav) {
 
-//FIX THIS !!!!!!!!!
- for( let i = 0 ; i < navBttnCollection.length ; i++ ){
-   
-   navBttnCollection[i].innerHTML = siteContent.nav[i];
+   if( key.substring(0,3) == 'nav' ){
+      navBttnArray[i].innerHTML = siteContent.nav[key];
+      i++;
+   }
 }
 
-// navBttnArray[1].innerHTML = siteContent.nav["nav-item-1"];
-// navBttnArray[3].innerHTML = siteContent.nav["nav-item-2"];
-// navBttnArray[5].innerHTML = siteContent.nav["nav-item-3"];
-// navBttnArray[7].innerHTML = siteContent.nav["nav-item-4"];
-// navBttnArray[9].innerHTML = siteContent.nav["nav-item-5"];
-// navBttnArray[11].innerHTML = siteContent.nav["nav-item-6"];
+
 
 //======================================================
 
