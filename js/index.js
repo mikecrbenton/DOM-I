@@ -49,8 +49,14 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 
 
 //======================================================
+/* LEARNED :  1) children not childnode
+              2) convert HTML Collection to Array
+              3) for in to loop through ( inner object )
+              4) if() statement to check for correct tag
+*/
 
-let navBttn = document.querySelector('nav').children;  // NOT childNode !!
+
+let navBttn = document.querySelector('nav').children;  
 let navBttnArray = Array.from(navBttn);
 
 let i = 0;
