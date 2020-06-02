@@ -50,8 +50,8 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 
 //======================================================
 /* LEARNED :  1) children not childnode
-              2) convert HTML Collection to Array
-              3) for in to loop through ( inner object )
+              2) can convert HTML Collection to Array
+              3) for in to loop through ( INNER object )
               4) if() statement to check for correct tag
 */
 
@@ -61,12 +61,15 @@ let navBttnArray = Array.from(navBttn);
 
 let i = 0;
 for ( key in siteContent.nav) {
+   //ONLY LINKS - HANDLE IMAGE SEPARATELY
    if( key.substring(0,3) == 'nav' ){
       navBttnArray[i].innerHTML = siteContent.nav[key];
       i++;
    }
 }
- //navBttnArray.push(siteContent.nav[key]); //not working
+
+
+ //navBttnArray.push(siteContent.nav[key]); //THIS ISN'T WORKING
 
 
 //======================================================
@@ -76,37 +79,56 @@ let h1_el = document.querySelector("h1");
 console.log(h1_el);
 h1_el.innerHTML = siteContent["cta"]['h1'];
 
+
+
+
+
+
 //======================================================
 
-//FINISHED
 let bttn_el = document.querySelector("button");
 bttn_el.innerHTML = siteContent["cta"]["button"];
 
+
+
+
+
+
 //======================================================
 
-//FINISHED
 let mainImg = document.getElementById("cta-img");
 mainImg.src = "img/header-img.png";
 
-//======================================================
 
-//REFACTORED TO A LOOP
+
+
+
+
+//======================================================
 
 //GRAB THE HTML ELEMENTS ( THIS DOES NOT GRAB THE IMAGE!! )
 let contentBlocks = document.querySelectorAll(".text-content"); 
 
-let module = 0;
+/* ------------------------------------------------
+   Loop through the inner JSON object- placing into
+   the NodeList "contentBlocks" from index.html
+   It has 5 divs, each with 2 html elements - 
+   Example [0][0] and [0][1] then [1][0] and [1][1] 
+   ( indexes 0 - 4 in the NodeList, and a separate case
+   for handling the image from the JSON object )
+   ------------------------------------------------*/
+
+let currentDiv = 0;
 let htmlElements = 0;
 
-//LOOP THROUGH THE INNER OBJECT
 for ( key in siteContent['main-content']) {
 
       //WHEN IT HITS THE IMAGE, HANDLE SEPARATELY
       if( key === 'middle-img-src'){
          document.getElementById('middle-img').src = siteContent['main-content'][key];
-         // the image is only 1 element - not 2 , so no need to increment htmlElements
+         /* The image is only 1 html element - not 2 , so no need to increment htmlElements */
       }else{
-         contentBlocks[ module ].children[ htmlElements ].textContent = siteContent['main-content'][key];
+         contentBlocks[ currentDiv ].children[ htmlElements ].textContent = siteContent['main-content'][key];
          htmlElements++;
       }
        
@@ -114,9 +136,12 @@ for ( key in siteContent['main-content']) {
       // 
       if( htmlElements > 1 ) { 
          htmlElements = 0
-         module++; };
+         currentDiv++; };
 }
 
+
+
+//----------------------------------------------------------------------------------------------------
 // ORIGINAL CODE 
 //contentBlocks[0].children[0].textContent = siteContent['main-content']['features-h4'];       // 2 0
 //contentBlocks[0].children[1].textContent = siteContent['main-content']['features-content'];  // 2 1
@@ -135,15 +160,39 @@ for ( key in siteContent['main-content']) {
 
 // contentBlocks[4].children[0].textContent = siteContent['main-content']['vision-h4'];         // 2 9
 // contentBlocks[4].children[1].textContent = siteContent['main-content']['vision-content'];    // 2 10
+//-----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 //======================================================
 
 let contact = document.getElementsByClassName('contact');
 
-contact[0].children[0].textContent = siteContent['contact']['contact-h4']; // 3 0
-contact[0].children[1].textContent = siteContent['contact']['address'];    // 3 1
-contact[0].children[2].textContent = siteContent['contact']['phone'];      // 3 2
-contact[0].children[3].textContent = siteContent['contact']['email'];      // 3 3
+//RE-USE i
+i = 0;
+for( key in siteContent['contact']){
+   contact[0].children[i].textContent = siteContent['contact'][key]; 
+   i++
+}
+
+
+// ORIGINAL CODE--------------------------------------------------------------------
+// contact[0].children[0].textContent = siteContent['contact']['contact-h4']; // 3 0
+// contact[0].children[1].textContent = siteContent['contact']['address'];    // 3 1
+// contact[0].children[2].textContent = siteContent['contact']['phone'];      // 3 2
+// contact[0].children[3].textContent = siteContent['contact']['email'];      // 3 3
+//----------------------------------------------------------------------------------
+
+
+
+
+
+
 
 //======================================================
 
