@@ -61,13 +61,12 @@ let navBttnArray = Array.from(navBttn);
 
 let i = 0;
 for ( key in siteContent.nav) {
-
    if( key.substring(0,3) == 'nav' ){
       navBttnArray[i].innerHTML = siteContent.nav[key];
       i++;
    }
 }
-
+ //navBttnArray.push(siteContent.nav[key]); //not working
 
 
 //======================================================
@@ -91,26 +90,51 @@ mainImg.src = "img/header-img.png";
 
 //======================================================
 
-//NEED TO REFACTOR
-let contentBlocks = document.querySelectorAll(".text-content");
+//REFACTORED TO A LOOP
 
-contentBlocks[0].children[0].textContent = siteContent['main-content']['features-h4'];       // 2 0
-contentBlocks[0].children[1].textContent = siteContent['main-content']['features-content'];  // 2 1
+//GRAB THE HTML ELEMENTS ( THIS DOES NOT GRAB THE IMAGE!! )
+let contentBlocks = document.querySelectorAll(".text-content"); 
 
-contentBlocks[1].children[0].textContent = siteContent['main-content']['about-h4'];          // 2 2
-contentBlocks[1].children[1].textContent = siteContent['main-content']['about-content'];     // 2 3
+let module = 0;
+let htmlElements = 0;
 
-let middleImg = document.getElementById('middle-img');                                       // 2 4
-middleImg.src = siteContent['main-content']['middle-img-src'];
+//LOOP THROUGH THE INNER OBJECT
+for ( key in siteContent['main-content']) {
 
-contentBlocks[2].children[0].textContent = siteContent['main-content']['services-h4'];       // 2 5
-contentBlocks[2].children[1].textContent = siteContent['main-content']['services-content'];  // 2 6
+      //WHEN IT HITS THE IMAGE, HANDLE SEPARATELY
+      if( key === 'middle-img-src'){
+         document.getElementById('middle-img').src = siteContent['main-content'][key];
+         // the image is only 1 element - not 2 , so no need to increment htmlElements
+      }else{
+         contentBlocks[ module ].children[ htmlElements ].textContent = siteContent['main-content'][key];
+         htmlElements++;
+      }
+       
+      //RESET EVERY 2 LOOPS
+      // 
+      if( htmlElements > 1 ) { 
+         htmlElements = 0
+         module++; };
+}
 
-contentBlocks[3].children[0].textContent = siteContent['main-content']['product-h4'];        // 2 7
-contentBlocks[3].children[1].textContent = siteContent['main-content']['product-content'];   // 2 8
+// ORIGINAL CODE 
+//contentBlocks[0].children[0].textContent = siteContent['main-content']['features-h4'];       // 2 0
+//contentBlocks[0].children[1].textContent = siteContent['main-content']['features-content'];  // 2 1
 
-contentBlocks[4].children[0].textContent = siteContent['main-content']['vision-h4'];         // 2 9
-contentBlocks[4].children[1].textContent = siteContent['main-content']['vision-content'];    // 2 10
+// contentBlocks[1].children[0].textContent = siteContent['main-content']['about-h4'];          // 2 2
+// contentBlocks[1].children[1].textContent = siteContent['main-content']['about-content'];     // 2 3
+
+// let middleImg = document.getElementById('middle-img');                                       // 2 4
+// middleImg.src = siteContent['main-content']['middle-img-src'];
+
+// contentBlocks[2].children[0].textContent = siteContent['main-content']['services-h4'];       // 2 5
+// contentBlocks[2].children[1].textContent = siteContent['main-content']['services-content'];  // 2 6
+
+// contentBlocks[3].children[0].textContent = siteContent['main-content']['product-h4'];        // 2 7
+// contentBlocks[3].children[1].textContent = siteContent['main-content']['product-content'];   // 2 8
+
+// contentBlocks[4].children[0].textContent = siteContent['main-content']['vision-h4'];         // 2 9
+// contentBlocks[4].children[1].textContent = siteContent['main-content']['vision-content'];    // 2 10
 
 //======================================================
 
