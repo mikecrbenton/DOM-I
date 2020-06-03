@@ -49,39 +49,32 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 
 
 //======================================================
-/* LEARNED :  1) children not childnode
-              2) can convert HTML Collection to Array
-              3) for in to loop through ( INNER object )
-              4) if() statement to check for correct tag
-*/
-
 
 let navBttn = document.querySelector('nav').children;  
-let navBttnArray = Array.from(navBttn);
+navBttn = Array.from(navBttn);
 
 let i = 0;
 for ( key in siteContent.nav) {
+
    //ONLY LINKS - HANDLE IMAGE SEPARATELY
    if( key.substring(0,3) == 'nav' ){
-      navBttnArray[i].innerHTML = siteContent.nav[key];
+      navBttn[i].innerHTML = siteContent.nav[key];
       i++;
    }
 }
 
-
- //navBttnArray.push(siteContent.nav[key]); //THIS ISN'T WORKING
+// navBttn.forEach( (eachTag) => {                        //---------------------------------------
+//    eachTag.innerHTML = siteContent.nav['nav-item-1'];  // how to access JSON dynamically inside the loop??
+                                                          //----------------------------------------
+// })
 
 
 //======================================================
 
-//NEED TO ADD BREAKS!!!!
+//NEED TO ADD <br>!!!!
 let h1_el = document.querySelector("h1");
 console.log(h1_el);
 h1_el.innerHTML = siteContent["cta"]['h1'];
-
-
-
-
 
 
 //======================================================
@@ -90,18 +83,10 @@ let bttn_el = document.querySelector("button");
 bttn_el.innerHTML = siteContent["cta"]["button"];
 
 
-
-
-
-
 //======================================================
 
 let mainImg = document.getElementById("cta-img");
 mainImg.src = "img/header-img.png";
-
-
-
-
 
 
 //======================================================
@@ -133,38 +118,11 @@ for ( key in siteContent['main-content']) {
       }
        
       //RESET EVERY 2 LOOPS
-      // 
       if( htmlElements > 1 ) { 
          htmlElements = 0
-         currentDiv++; };
+         currentDiv++; 
+      };
 }
-
-
-
-//----------------------------------------------------------------------------------------------------
-// ORIGINAL CODE 
-//contentBlocks[0].children[0].textContent = siteContent['main-content']['features-h4'];       // 2 0
-//contentBlocks[0].children[1].textContent = siteContent['main-content']['features-content'];  // 2 1
-
-// contentBlocks[1].children[0].textContent = siteContent['main-content']['about-h4'];          // 2 2
-// contentBlocks[1].children[1].textContent = siteContent['main-content']['about-content'];     // 2 3
-
-// let middleImg = document.getElementById('middle-img');                                       // 2 4
-// middleImg.src = siteContent['main-content']['middle-img-src'];
-
-// contentBlocks[2].children[0].textContent = siteContent['main-content']['services-h4'];       // 2 5
-// contentBlocks[2].children[1].textContent = siteContent['main-content']['services-content'];  // 2 6
-
-// contentBlocks[3].children[0].textContent = siteContent['main-content']['product-h4'];        // 2 7
-// contentBlocks[3].children[1].textContent = siteContent['main-content']['product-content'];   // 2 8
-
-// contentBlocks[4].children[0].textContent = siteContent['main-content']['vision-h4'];         // 2 9
-// contentBlocks[4].children[1].textContent = siteContent['main-content']['vision-content'];    // 2 10
-//-----------------------------------------------------------------------------------------------------
-
-
-
-
 
 
 
@@ -173,23 +131,16 @@ for ( key in siteContent['main-content']) {
 
 let contact = document.getElementsByClassName('contact');
 
-//RE-USE i
-i = 0;
+
+i = 0; //re-use
+
 for( key in siteContent['contact']){
+
    contact[0].children[i].textContent = siteContent['contact'][key]; 
    i++
 }
 
-
-// ORIGINAL CODE--------------------------------------------------------------------
-// contact[0].children[0].textContent = siteContent['contact']['contact-h4']; // 3 0
-// contact[0].children[1].textContent = siteContent['contact']['address'];    // 3 1
-// contact[0].children[2].textContent = siteContent['contact']['phone'];      // 3 2
-// contact[0].children[3].textContent = siteContent['contact']['email'];      // 3 3
-//----------------------------------------------------------------------------------
-
-
-
+console.log( contact );
 
 
 
@@ -198,3 +149,36 @@ for( key in siteContent['contact']){
 
 let footer = document.querySelector('footer p');
 footer.textContent = siteContent['footer']['copyright'];
+
+
+//=======================================================
+
+let navToGreen = document.querySelectorAll('nav a');
+//console.log(navToGreen);
+
+navToGreen.forEach( (eachTag) => {
+   eachTag.style.color = 'green';
+});
+
+//==========================================================
+
+// CREATE HTML ELEMENT
+let newFrontElement = document.createElement('a');
+let newEndElement = document.createElement('a');
+
+// CREATE CONTENT
+let newFrontText = document.createTextNode('Front');
+let newEndText = document.createTextNode('End');
+
+// APPEND CONTENT AND ADD ATTRIBUTES
+newFrontElement.append(newFrontText);
+newFrontElement.setAttribute('href', '#');
+newFrontElement.style.color = 'green';
+
+newEndElement.append(newEndText);
+newEndElement.setAttribute('href', '#');
+newEndElement.style.color = 'green';
+
+// ADD TO THE DOCUMENT
+document.querySelectorAll('nav')[0].prepend(newFrontElement);
+document.querySelectorAll('nav')[0].appendChild(newEndElement);
