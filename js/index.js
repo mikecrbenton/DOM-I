@@ -43,36 +43,43 @@ const siteContent = {
   },
 };
 
-// Example: Update the img src for the logo
+// lambda Example: Update the img src for the logo
 let logo = document.getElementById("logo-img");
 logo.setAttribute('src', siteContent["nav"]["img-src"])
 
 
 //======================================================
-// SET THE 6 <a> LINKS IN <nav>
+// SET THE 6 <a> LINKS IN <nav>  
 
 let navBttn = document.querySelector('nav').children;  
-navBttn = Array.from(navBttn);
 
 let i = 0;
 for ( key in siteContent.nav) {
 
-   //ONLY LINKS - HANDLE IMAGE SEPARATELY
+   //ONLY LINKS IN JSON OBJECT - HANDLE IMAGE SEPARATELY ( ^ LAMBDA CODE ABOVE ^ )
    if( key.substring(0,3) == 'nav' ){
       navBttn[i].innerHTML = siteContent.nav[key];
       i++;
    }
 }
 
+/********************************************************* 
+   // FROM STANDUP 6/3/20- MORE ELEGANT WAY TO ACCESS - 
+   // DID NOT THINK ABOUT ACCESSING THE JSON "KEY" AS A STRING 
 
+   const navLinks = document.querySelectorAll("nav a");
+   
+   navLinks.forEach( (eachTag, i) => {
+      eachTag.textContent = siteContent.nav[`nav-item-${i+1}`];
+   });
+
+********************************************************/
 
 //======================================================
 // SET THE HEADER ( STILL NEED TO ADD <br> )
 
 let h1_el = document.querySelector("h1");
-console.log(h1_el);
 h1_el.innerHTML = siteContent["cta"]['h1'];
-
 
 
 //======================================================
@@ -101,15 +108,16 @@ mainImg.src = "img/header-img.png";
    for handling the image from the JSON object )
    ------------------------------------------------*/
 
-//GRAB THE HTML ELEMENTS ( THIS DOES NOT GRAB THE IMAGE!! )
+//GRAB THE HTML ELEMENTS ( 5 OF THEM - THIS DOES NOT GRAB THE IMAGE!! )
 let contentBlocks = document.querySelectorAll(".text-content"); 
 
+//COUNTERS
 let currentDiv = 0;
 let htmlElements = 0;
 
 for ( key in siteContent['main-content']) {
 
-      //HANDLE IMAGE SEPARATELY
+      //HANDLE IMAGE FROM JSON SEPARATELY
       if( key === 'middle-img-src'){
 
          document.getElementById('middle-img').src = siteContent['main-content'][key];
@@ -174,7 +182,7 @@ let newEndElement = document.createElement('a');
 let newFrontText = document.createTextNode('Front');
 let newEndText = document.createTextNode('End');
 
-// APPEND CONTENT AND ADD ATTRIBUTES
+// APPEND CONTENT AND ADD ATTRIBUTES( helper function )
 createNewElement(newFrontElement,newFrontText);
 createNewElement(newEndElement,newEndText);
 
